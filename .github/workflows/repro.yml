@@ -5,20 +5,28 @@ on:
   
 jobs:
   repro:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
     
-      - uses: crazy-max/ghaction-setup-docker@v1
+#       - uses: crazy-max/ghaction-setup-docker@v1
     
       - uses: aws-actions/setup-sam@v2
+        with:
+          use-installer: true
 
       - run: |
           set -eux
           
-          docker version
-          sam --version
+          sudo socat -d -d -t100 -lf /dev/stdout -v UNIX-LISTEN:/var/run/docker.debug,mode=777,reuseaddr,fork UNIX-CONNECT:/var/run/docker.sock &
           
-          sam build
+          docker version >> output.log
+          sam --version >> output.log
+          
+          sam build >> output.log
           echo $?
+          
+          sleep 1
+          cat output.log
+          
