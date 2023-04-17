@@ -24,7 +24,7 @@ jobs:
           docker version >> output.log
           sam --version >> output.log
           
-          sam build >> output.log
+          DOCKER_HOST=unix:///var/run/docker.debug sam build >> output.log
           echo $?
           
           sleep 1
