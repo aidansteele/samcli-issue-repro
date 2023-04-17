@@ -11,8 +11,6 @@ jobs:
       - uses: actions/checkout@v3
     
       - uses: aws-actions/setup-sam@v2
-        with:
-          use-installer: true
 
       - run: |
           set -eux
