@@ -15,6 +15,8 @@ jobs:
       - uses: aws-actions/setup-sam@v2
         with:
           use-installer: true
+     
+      - run: sudo apt-get install -y socat
 
       - run: |
           set -eux
